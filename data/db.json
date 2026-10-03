@@ -1,0 +1,685 @@
+{
+  "settings": {
+    "port": 21420,
+    "layout": "vertical",
+    "defaultVolume": 80,
+    "ttsEnabled": true,
+    "ttsVoice": "tr-TR",
+    "ttsRate": 1,
+    "autoConnectOnStart": false,
+    "defaultUsername": "",
+    "copyMedia": true,
+    "theme": "dark"
+  },
+  "profiles": [
+    {
+      "id": "default",
+      "name": "Normal Yayın",
+      "isDefault": true,
+      "createdAt": "2026-09-30T11:38:28.478Z"
+    },
+    {
+      "id": "gaming",
+      "name": "Oyun Yayını",
+      "isDefault": false,
+      "createdAt": "2026-09-30T11:38:28.478Z"
+    },
+    {
+      "id": "pk",
+      "name": "Sohbet / PK",
+      "isDefault": false,
+      "createdAt": "2026-09-30T11:38:28.478Z"
+    }
+  ],
+  "activeProfileId": "default",
+  "automations": [
+    {
+      "id": "auto-lion",
+      "profileId": "default",
+      "ad": "Aslan Hediyesinde Krallık Kutlaması",
+      "aktif": true,
+      "tetikleyici": {
+        "type": "gift",
+        "config": {
+          "giftName": "Lion",
+          "turkishName": "Aslan",
+          "minDiamonds": 0,
+          "minCount": 1,
+          "matchType": "specific"
+        }
+      },
+      "aksiyonlar": [
+        {
+          "id": "act-1",
+          "type": "alert",
+          "text": "🦁 {kullanici} ASLAN GÖNDERDİ! TEŞEKKÜRLER!",
+          "subText": "{jeton} Jeton Değerinde Muazzam Destek!",
+          "duration": 8,
+          "animation": "zoom"
+        },
+        {
+          "id": "act-2",
+          "type": "sound",
+          "soundUrl": "/default-sounds/tada.mp3",
+          "volume": 90
+        }
+      ],
+      "conflictMode": "interrupt",
+      "cooldownSec": 2,
+      "userLimitSec": 0,
+      "multiplier": true,
+      "createdAt": "2026-09-30T11:38:28.473Z"
+    },
+    {
+      "id": "auto-rose",
+      "profileId": "default",
+      "ad": "Gül Hediyesi - Teşekkür",
+      "aktif": true,
+      "tetikleyici": {
+        "type": "gift",
+        "config": {
+          "giftName": "Rose",
+          "turkishName": "Gül",
+          "minDiamonds": 1,
+          "minCount": 1,
+          "matchType": "specific"
+        }
+      },
+      "aksiyonlar": [
+        {
+          "id": "act-1",
+          "type": "alert",
+          "text": "🌹 {kullanici} Gül gönderdi x{adet}!",
+          "subText": "Desteklerin için teşekkürler!",
+          "duration": 4,
+          "animation": "bounce"
+        },
+        {
+          "id": "act-2",
+          "type": "sound",
+          "soundUrl": "/default-sounds/pop.mp3",
+          "volume": 70
+        }
+      ],
+      "conflictMode": "queue",
+      "cooldownSec": 0,
+      "userLimitSec": 0,
+      "multiplier": false,
+      "createdAt": "2026-09-30T11:38:28.475Z"
+    },
+    {
+      "id": "auto-galaxy",
+      "profileId": "default",
+      "ad": "Galaksi Hediyesi - Uzay Animasyonu",
+      "aktif": true,
+      "tetikleyici": {
+        "type": "gift",
+        "config": {
+          "giftName": "Galaxy",
+          "turkishName": "Galaksi",
+          "minDiamonds": 1000,
+          "minCount": 1,
+          "matchType": "specific"
+        }
+      },
+      "aksiyonlar": [
+        {
+          "id": "act-1",
+          "type": "alert",
+          "text": "🌌 {kullanici} GALAKSİ GÖNDERDİ!",
+          "subText": "1000 Jetonluk Yıldız Yağmuru!",
+          "duration": 6,
+          "animation": "shake"
+        },
+        {
+          "id": "act-2",
+          "type": "sound",
+          "soundUrl": "/default-sounds/bell.mp3",
+          "volume": 85
+        }
+      ],
+      "conflictMode": "queue",
+      "cooldownSec": 1,
+      "userLimitSec": 0,
+      "multiplier": false,
+      "createdAt": "2026-09-30T11:38:28.475Z"
+    },
+    {
+      "id": "auto-follow",
+      "profileId": "default",
+      "ad": "Yeni Takipçi Karşılama",
+      "aktif": true,
+      "tetikleyici": {
+        "type": "follow",
+        "config": {}
+      },
+      "aksiyonlar": [
+        {
+          "id": "act-1",
+          "type": "alert",
+          "text": "👋 {kullanici} Ailemize Katıldı! (Takip)",
+          "subText": "Hoş geldin!",
+          "duration": 3,
+          "animation": "slide"
+        }
+      ],
+      "conflictMode": "queue",
+      "cooldownSec": 1,
+      "userLimitSec": 0,
+      "multiplier": false,
+      "createdAt": "2026-09-30T11:38:28.475Z"
+    },
+    {
+      "id": "auto-korku-chat",
+      "profileId": "default",
+      "ad": "Chatte KORKU Yazılınca Çığlık Sesi",
+      "aktif": true,
+      "tetikleyici": {
+        "type": "comment",
+        "config": {
+          "keyword": "KORKU",
+          "matchType": "contains",
+          "caseSensitive": false
+        }
+      },
+      "aksiyonlar": [
+        {
+          "id": "act-1",
+          "type": "alert",
+          "text": "😱 {kullanici}: \"{yorum}\"",
+          "subText": "Korku modu tetiklendi!",
+          "duration": 3,
+          "animation": "shake"
+        },
+        {
+          "id": "act-2",
+          "type": "sound",
+          "soundUrl": "/default-sounds/laser.mp3",
+          "volume": 80
+        }
+      ],
+      "conflictMode": "multi",
+      "cooldownSec": 5,
+      "userLimitSec": 10,
+      "multiplier": false,
+      "createdAt": "2026-09-30T11:38:28.475Z"
+    },
+    {
+      "id": "auto-likes",
+      "profileId": "default",
+      "ad": "1000 Beğeni Eşiği Kutlaması",
+      "aktif": true,
+      "tetikleyici": {
+        "type": "like",
+        "config": {
+          "step": 1000
+        }
+      },
+      "aksiyonlar": [
+        {
+          "id": "act-1",
+          "type": "alert",
+          "text": "❤️ +1,000 Beğeni Barajı Aşıldı!",
+          "subText": "Tıklayan ellere sağlık!",
+          "duration": 4,
+          "animation": "bounce"
+        }
+      ],
+      "conflictMode": "queue",
+      "cooldownSec": 3,
+      "userLimitSec": 0,
+      "multiplier": false,
+      "createdAt": "2026-09-30T11:38:28.475Z"
+    }
+  ],
+  "media": [],
+  "screenLayouts": {
+    "default": [
+      {
+        "id": "widget-video",
+        "type": "videoPlayer",
+        "name": "Video / Edit Oynatıcı",
+        "enabled": true,
+        "x": 40,
+        "y": 400,
+        "width": 1000,
+        "height": 1000,
+        "zIndex": 10,
+        "opacity": 100,
+        "rotation": 0
+      },
+      {
+        "id": "widget-alert",
+        "type": "alertBox",
+        "name": "Uyarı Kutusu (Hediyeler & Olaylar)",
+        "enabled": true,
+        "x": 90,
+        "y": 120,
+        "width": 900,
+        "height": 220,
+        "zIndex": 20,
+        "opacity": 100,
+        "rotation": 0
+      },
+      {
+        "id": "widget-chat",
+        "type": "chatStream",
+        "name": "Canlı Sohbet Akışı",
+        "enabled": true,
+        "x": 60,
+        "y": 1420,
+        "width": 480,
+        "height": 440,
+        "zIndex": 15,
+        "opacity": 95,
+        "rotation": 0
+      },
+      {
+        "id": "widget-goal",
+        "type": "goalBar",
+        "name": "Hedef Çubuğu",
+        "enabled": true,
+        "x": 90,
+        "y": 35,
+        "width": 900,
+        "height": 65,
+        "zIndex": 15,
+        "opacity": 100,
+        "rotation": 0,
+        "goalType": "diamond",
+        "goalTarget": 1000,
+        "goalCurrent": 0,
+        "goalTitle": "Günün Hediyesi: Aslan!"
+      },
+      {
+        "id": "widget-counters",
+        "type": "counters",
+        "name": "Beğeni & Jeton Sayaçları",
+        "enabled": true,
+        "x": 560,
+        "y": 1720,
+        "width": 460,
+        "height": 140,
+        "zIndex": 15,
+        "opacity": 100,
+        "rotation": 0
+      },
+      {
+        "id": "widget-leaderboard",
+        "type": "leaderboard",
+        "name": "Hediye Lider Tablosu (Top 5)",
+        "enabled": true,
+        "x": 640,
+        "y": 1380,
+        "width": 380,
+        "height": 320,
+        "zIndex": 15,
+        "opacity": 95,
+        "rotation": 0
+      },
+      {
+        "id": "widget-ticker",
+        "type": "ticker",
+        "name": "Son Takipçi & Son Hediye",
+        "enabled": true,
+        "x": 60,
+        "y": 1870,
+        "width": 960,
+        "height": 40,
+        "zIndex": 15,
+        "opacity": 90,
+        "rotation": 0
+      },
+      {
+        "id": "widget-viewers",
+        "type": "viewerCount",
+        "name": "Canlı İzleyici Sayacı",
+        "enabled": true,
+        "x": 820,
+        "y": 110,
+        "width": 200,
+        "height": 50,
+        "zIndex": 18,
+        "opacity": 100,
+        "rotation": 0
+      },
+      {
+        "id": "widget-custom",
+        "type": "customText",
+        "name": "Özel Metin / Yayıncı Etiketi",
+        "enabled": false,
+        "x": 100,
+        "y": 100,
+        "width": 300,
+        "height": 60,
+        "zIndex": 5,
+        "opacity": 100,
+        "rotation": 0,
+        "customText": "StreamPulse TikTok LIVE"
+      }
+    ],
+    "gaming": [
+      {
+        "id": "widget-video",
+        "type": "videoPlayer",
+        "name": "Video / Edit Oynatıcı",
+        "enabled": true,
+        "x": 40,
+        "y": 400,
+        "width": 1000,
+        "height": 1000,
+        "zIndex": 10,
+        "opacity": 100,
+        "rotation": 0
+      },
+      {
+        "id": "widget-alert",
+        "type": "alertBox",
+        "name": "Uyarı Kutusu (Hediyeler & Olaylar)",
+        "enabled": true,
+        "x": 90,
+        "y": 120,
+        "width": 900,
+        "height": 220,
+        "zIndex": 20,
+        "opacity": 100,
+        "rotation": 0
+      },
+      {
+        "id": "widget-chat",
+        "type": "chatStream",
+        "name": "Canlı Sohbet Akışı",
+        "enabled": true,
+        "x": 60,
+        "y": 1420,
+        "width": 480,
+        "height": 440,
+        "zIndex": 15,
+        "opacity": 95,
+        "rotation": 0
+      },
+      {
+        "id": "widget-goal",
+        "type": "goalBar",
+        "name": "Hedef Çubuğu",
+        "enabled": true,
+        "x": 90,
+        "y": 35,
+        "width": 900,
+        "height": 65,
+        "zIndex": 15,
+        "opacity": 100,
+        "rotation": 0,
+        "goalType": "diamond",
+        "goalTarget": 1000,
+        "goalCurrent": 0,
+        "goalTitle": "Günün Hediyesi: Aslan!"
+      },
+      {
+        "id": "widget-counters",
+        "type": "counters",
+        "name": "Beğeni & Jeton Sayaçları",
+        "enabled": true,
+        "x": 560,
+        "y": 1720,
+        "width": 460,
+        "height": 140,
+        "zIndex": 15,
+        "opacity": 100,
+        "rotation": 0
+      },
+      {
+        "id": "widget-leaderboard",
+        "type": "leaderboard",
+        "name": "Hediye Lider Tablosu (Top 5)",
+        "enabled": true,
+        "x": 640,
+        "y": 1380,
+        "width": 380,
+        "height": 320,
+        "zIndex": 15,
+        "opacity": 95,
+        "rotation": 0
+      },
+      {
+        "id": "widget-ticker",
+        "type": "ticker",
+        "name": "Son Takipçi & Son Hediye",
+        "enabled": true,
+        "x": 60,
+        "y": 1870,
+        "width": 960,
+        "height": 40,
+        "zIndex": 15,
+        "opacity": 90,
+        "rotation": 0
+      },
+      {
+        "id": "widget-viewers",
+        "type": "viewerCount",
+        "name": "Canlı İzleyici Sayacı",
+        "enabled": true,
+        "x": 820,
+        "y": 110,
+        "width": 200,
+        "height": 50,
+        "zIndex": 18,
+        "opacity": 100,
+        "rotation": 0
+      },
+      {
+        "id": "widget-custom",
+        "type": "customText",
+        "name": "Özel Metin / Yayıncı Etiketi",
+        "enabled": false,
+        "x": 100,
+        "y": 100,
+        "width": 300,
+        "height": 60,
+        "zIndex": 5,
+        "opacity": 100,
+        "rotation": 0,
+        "customText": "StreamPulse TikTok LIVE"
+      }
+    ],
+    "pk": [
+      {
+        "id": "widget-video",
+        "type": "videoPlayer",
+        "name": "Video / Edit Oynatıcı",
+        "enabled": true,
+        "x": 40,
+        "y": 400,
+        "width": 1000,
+        "height": 1000,
+        "zIndex": 10,
+        "opacity": 100,
+        "rotation": 0
+      },
+      {
+        "id": "widget-alert",
+        "type": "alertBox",
+        "name": "Uyarı Kutusu (Hediyeler & Olaylar)",
+        "enabled": true,
+        "x": 90,
+        "y": 120,
+        "width": 900,
+        "height": 220,
+        "zIndex": 20,
+        "opacity": 100,
+        "rotation": 0
+      },
+      {
+        "id": "widget-chat",
+        "type": "chatStream",
+        "name": "Canlı Sohbet Akışı",
+        "enabled": true,
+        "x": 60,
+        "y": 1420,
+        "width": 480,
+        "height": 440,
+        "zIndex": 15,
+        "opacity": 95,
+        "rotation": 0
+      },
+      {
+        "id": "widget-goal",
+        "type": "goalBar",
+        "name": "Hedef Çubuğu",
+        "enabled": true,
+        "x": 90,
+        "y": 35,
+        "width": 900,
+        "height": 65,
+        "zIndex": 15,
+        "opacity": 100,
+        "rotation": 0,
+        "goalType": "diamond",
+        "goalTarget": 1000,
+        "goalCurrent": 0,
+        "goalTitle": "Günün Hediyesi: Aslan!"
+      },
+      {
+        "id": "widget-counters",
+        "type": "counters",
+        "name": "Beğeni & Jeton Sayaçları",
+        "enabled": true,
+        "x": 560,
+        "y": 1720,
+        "width": 460,
+        "height": 140,
+        "zIndex": 15,
+        "opacity": 100,
+        "rotation": 0
+      },
+      {
+        "id": "widget-leaderboard",
+        "type": "leaderboard",
+        "name": "Hediye Lider Tablosu (Top 5)",
+        "enabled": true,
+        "x": 640,
+        "y": 1380,
+        "width": 380,
+        "height": 320,
+        "zIndex": 15,
+        "opacity": 95,
+        "rotation": 0
+      },
+      {
+        "id": "widget-ticker",
+        "type": "ticker",
+        "name": "Son Takipçi & Son Hediye",
+        "enabled": true,
+        "x": 60,
+        "y": 1870,
+        "width": 960,
+        "height": 40,
+        "zIndex": 15,
+        "opacity": 90,
+        "rotation": 0
+      },
+      {
+        "id": "widget-viewers",
+        "type": "viewerCount",
+        "name": "Canlı İzleyici Sayacı",
+        "enabled": true,
+        "x": 820,
+        "y": 110,
+        "width": 200,
+        "height": 50,
+        "zIndex": 18,
+        "opacity": 100,
+        "rotation": 0
+      },
+      {
+        "id": "widget-custom",
+        "type": "customText",
+        "name": "Özel Metin / Yayıncı Etiketi",
+        "enabled": false,
+        "x": 100,
+        "y": 100,
+        "width": 300,
+        "height": 60,
+        "zIndex": 5,
+        "opacity": 100,
+        "rotation": 0,
+        "customText": "StreamPulse TikTok LIVE"
+      }
+    ]
+  },
+  "history": [
+    {
+      "id": "hist-1790768460869-2ceum",
+      "timestamp": "2026-09-30T11:41:00.869Z",
+      "type": "gift",
+      "user": {
+        "id": "sim-user",
+        "username": "test_ahmet",
+        "nickname": "Ahmet Kral",
+        "avatar": "https://p16-webcast.tiktokcdn.com/img/maliva/webcast-va/eba762589531e0f09761bbca2c75a45b~tplv-obj.png"
+      },
+      "gift": {
+        "id": 6059,
+        "name": "Lion",
+        "turkishName": "Aslan",
+        "diamonds": 29999,
+        "totalDiamonds": 29999,
+        "count": 1,
+        "repeatEnd": true,
+        "icon": "https://p16-webcast.tiktokcdn.com/img/maliva/webcast-va/eba762589531e0f09761bbca2c75a45b~tplv-obj.png"
+      },
+      "comment": "",
+      "ruleName": "Aslan Hediyesinde Krallık Kutlaması",
+      "ruleId": "auto-lion",
+      "status": "triggered",
+      "error": null
+    },
+    {
+      "id": "hist-1790768423002-4mkvb",
+      "timestamp": "2026-09-30T11:40:23.002Z",
+      "type": "gift",
+      "user": {
+        "id": "sim-user",
+        "username": "test_ahmet",
+        "nickname": "Ahmet Kral",
+        "avatar": "https://p16-webcast.tiktokcdn.com/img/maliva/webcast-va/eba762589531e0f09761bbca2c75a45b~tplv-obj.png"
+      },
+      "gift": {
+        "id": 6059,
+        "name": "Lion",
+        "turkishName": "Aslan",
+        "diamonds": 29999,
+        "totalDiamonds": 29999,
+        "count": 1,
+        "repeatEnd": true,
+        "icon": "https://p16-webcast.tiktokcdn.com/img/maliva/webcast-va/eba762589531e0f09761bbca2c75a45b~tplv-obj.png"
+      },
+      "comment": "",
+      "ruleName": "Aslan Hediyesinde Krallık Kutlaması",
+      "ruleId": "auto-lion",
+      "status": "error",
+      "error": "this.startTimer is not a function"
+    }
+  ],
+  "counters": {
+    "totalLikes": 0,
+    "totalDiamonds": 59998,
+    "followerCount": 0,
+    "topGifters": [
+      {
+        "username": "test_ahmet",
+        "nickname": "Ahmet Kral",
+        "avatar": "https://p16-webcast.tiktokcdn.com/img/maliva/webcast-va/eba762589531e0f09761bbca2c75a45b~tplv-obj.png",
+        "diamonds": 59998
+      }
+    ],
+    "lastFollower": null,
+    "lastGifter": {
+      "id": "sim-user",
+      "username": "test_ahmet",
+      "nickname": "Ahmet Kral",
+      "avatar": "https://p16-webcast.tiktokcdn.com/img/maliva/webcast-va/eba762589531e0f09761bbca2c75a45b~tplv-obj.png"
+    },
+    "liveViewers": 0
+  }
+}
