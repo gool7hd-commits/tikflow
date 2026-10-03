@@ -1,0 +1,80 @@
+{
+  "name": "tikflow",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "TikFlow – TikTok LIVE Otomasyon Merkezi",
+  "main": "electron/main.js",
+  "scripts": {
+    "server": "node server/index.js",
+    "vite:dev": "vite",
+    "vite:build": "vite build",
+    "dev": "concurrently \"node server/index.js\" \"vite\" \"wait-on tcp:21420 tcp:5173 && electron .\"",
+    "dev:web": "concurrently \"node server/index.js\" \"vite\"",
+    "start": "concurrently \"node server/index.js\" \"wait-on tcp:21420 && electron .\"",
+    "build": "vite build && electron-builder --win"
+  },
+  "keywords": [
+    "tiktok",
+    "live",
+    "automation",
+    "tikflow",
+    "tikfinity",
+    "obs",
+    "stream"
+  ],
+  "author": "TikFlow Team",
+  "license": "MIT",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.19.2",
+    "multer": "^1.4.5-lts.1",
+    "obs-websocket-js": "^5.0.6",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "lucide-react": "^0.453.0",
+    "tiktok-live-connector": "^2.1.1-beta1",
+    "@bufbuild/protobuf": "^2.2.5",
+    "@eulerstream/euler-api-sdk": "0.1.7",
+    "callable-instance": "^2.0.0",
+    "typed-emitter": "^2.1.0",
+    "ws": "^8.18.0"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^4.3.1",
+    "autoprefixer": "^10.4.20",
+    "concurrently": "^8.2.2",
+    "cross-env": "^7.0.3",
+    "electron": "^31.3.1",
+    "electron-builder": "^24.13.3",
+    "postcss": "^8.4.45",
+    "tailwindcss": "^3.4.10",
+    "vite": "^5.4.2",
+    "wait-on": "^7.2.0"
+  },
+  "build": {
+    "appId": "com.tikflow.app",
+    "productName": "TikFlow",
+    "directories": {
+      "output": "dist-electron"
+    },
+    "files": [
+      "electron/**/*",
+      "server/**/*",
+      "overlay/**/*",
+      "dist/**/*",
+      "shared/**/*",
+      "package.json"
+    ],
+    "asar": true,
+    "asarUnpack": [
+      "server/default-sounds/**/*",
+      "overlay/**/*"
+    ],
+    "win": {
+      "target": [
+        "nsis",
+        "portable"
+      ]
+    }
+  }
+}

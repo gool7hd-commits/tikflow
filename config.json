@@ -1,0 +1,126 @@
+{
+  "_aciklama": "Bu dosyadan takımları, TikTok kullanıcı adını, hediye->puan eşlemesini ve süreyi değiştirebilirsin. Müzik dosyalarını music/ klasörüne takım adıyla (fb.mp3, gs.mp3, bjk.mp3, ts.mp3, amed.mp3) at.",
+  "port": 3000,
+  "tiktok": {
+    "username": "spoiderss",
+    "retryOnError": true,
+    "retryInterval": 5000,
+    "signApiKey": ""
+  },
+  "takimlar": [
+    {
+      "id": "fb",
+      "ad": "FENERBAHÇE",
+      "kisa": "FB",
+      "renk": "#1D3E8A",
+      "renkAcik": "#2E6BD6",
+      "accent": "#FFD600",
+      "logo": "fb.svg",
+      "sarki": "Dilimde Şarkıların Gündüz Güneşi",
+      "gift": {
+        "name": "Love you so much",
+        "coins": 1,
+        "image": "https://p16-webcast.tiktokcdn.com/img/alisg/webcast-sg/resource/fc549cf1bc61f9c8a1c97ebab68dced7.png~tplv-obj.webp"
+      },
+      "tourWins": 1
+    },
+    {
+      "id": "gs",
+      "ad": "GALATASARAY",
+      "kisa": "GS",
+      "renk": "#E30613",
+      "renkAcik": "#F5475B",
+      "accent": "#FFC107",
+      "logo": "gs.svg",
+      "sarki": "Ali Sami Yen",
+      "gift": {
+        "name": "Rose",
+        "coins": 1,
+        "image": "https://p16-webcast.tiktokcdn.com/img/maliva/webcast-va/eba3a9bb85c33e017f3648eaf88d7189~tplv-obj.webp"
+      },
+      "tourWins": 2
+    },
+    {
+      "id": "bjk",
+      "ad": "BEŞİKTAŞ",
+      "kisa": "BJK",
+      "renk": "#1B1B1B",
+      "renkAcik": "#3A3A3A",
+      "accent": "#FFFFFF",
+      "logo": "bjk.svg",
+      "sarki": "Forza Beşiktaş",
+      "gift": {
+        "id": "bt-gg",
+        "slug": "gg",
+        "name": "GG",
+        "coins": 1,
+        "image": "https://p16-webcast.tiktokcdn.com/img/maliva/webcast-va/3f02fa9594bd1495ff4e8aa5ae265eef~tplv-obj.webp"
+      },
+      "tourWins": 1
+    },
+    {
+      "id": "ts",
+      "ad": "TRABZONSPOR",
+      "kisa": "TS",
+      "renk": "#8E1F2F",
+      "renkAcik": "#B03A48",
+      "accent": "#7AB8E8",
+      "logo": "ts.svg",
+      "sarki": "Biz Bize Yeteriz",
+      "gift": {
+        "id": "bt-ice-cream-cone",
+        "slug": "ice-cream-cone",
+        "name": "Ice Cream Cone",
+        "coins": 1,
+        "image": "https://p16-webcast.tiktokcdn.com/img/maliva/webcast-va/968820bc85e274713c795a6aef3f7c67~tplv-obj.webp"
+      }
+    },
+    {
+      "id": "amed",
+      "ad": "AMEDSPOR",
+      "kisa": "AMED",
+      "renk": "#0F6A2B",
+      "renkAcik": "#2E9E4F",
+      "accent": "#E30613",
+      "logo": "amed.svg",
+      "sarki": "Amed'in Türküsü",
+      "gift": {
+        "id": "bt-tiktok",
+        "slug": "tiktok",
+        "name": "TikTok",
+        "coins": 1,
+        "image": "https://p16-webcast.tiktokcdn.com/img/maliva/webcast-va/802a21ae29f9fae5abe3693de9f874bd~tplv-obj.webp"
+      },
+      "tourWins": 3
+    }
+  ],
+  "oyun": {
+    "baslangicSuresi": 100,
+    "otomatikAktifTakim": true,
+    "aktifTakim": "fb",
+    "sarkiDegisimi": "lider",
+    "giftPuanCarpani": 1,
+    "giftAnimasyonSures": 4
+  },
+  "hediyeler": {
+    "giftPuanTablo": {
+      "Rose": 1,
+      "Star": 5,
+      "Diamond": 50,
+      "Galaxy": 100,
+      "Drama Queen": 10,
+      "Rosa": 10,
+      "Cap": 99,
+      "GG": 1,
+      "Perfume": 20,
+      "Birthday Cake": 1,
+      "Ice Cream Cone": 1,
+      "TikTok": 1,
+      "Finger Heart": 5,
+      "Love you so much": 1
+    }
+  },
+  "sunucu": {
+    "port": 3000
+  }
+}
