@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TikFlow Canlı Overlay</title>
+  <link rel="stylesheet" href="/overlay/overlay.css">
+  <style id="tikflow-custom-css"></style>
+</head>
+<body>
+  <!-- Canvas Container with dynamic scaling -->
+  <div id="canvas-container">
+    <div id="overlay-canvas" class="layout-vertical">
+
+      <!-- 1. Edit / Video Oynatıcı Widget -->
+      <div id="widget-video" class="overlay-widget">
+        <video id="media-video" playsinline muted preload="auto"></video>
+        <img id="media-image" alt="Media Animation" />
+      </div>
+
+      <!-- 2. Ses Oynatıcı Widget (Hidden audio elements) -->
+      <div id="widget-audio" class="overlay-widget" style="display:none;">
+        <audio id="audio-player" preload="auto"></audio>
+      </div>
+
+      <!-- 3. Uyarı (Alert) Kutusu Widget (LiveInteract 3D Glow & Combo) -->
+      <div id="widget-alert" class="overlay-widget">
+        <div id="alert-banner" class="alert-box-inner">
+          <div class="alert-glow"></div>
+          <div class="alert-icon-wrap">
+            <img id="alert-avatar" class="alert-avatar" src="" alt="Avatar" />
+            <img id="alert-gift-icon" class="alert-gift-icon" src="" alt="Gift" />
+            <!-- LiveInteract style Combo Multiplier Badge -->
+            <div id="alert-combo-badge" class="alert-combo-badge">x1</div>
+          </div>
+          <div class="alert-content">
+            <div id="alert-title" class="alert-title">Tebrikler!</div>
+            <div id="alert-subtitle" class="alert-subtitle">Hediye gönderildi</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 4. Canlı Sohbet Akışı Widget -->
+      <div id="widget-chat" class="overlay-widget">
+        <div class="widget-header">
+          <span class="pulse-dot"></span>
+          <span>CANLI SOHBET</span>
+        </div>
+        <div id="chat-messages" class="chat-list"></div>
+      </div>
+
+      <!-- 5. Dinamik Bağış & Hediye Hedef Çubuğu (LiveInteract Neon Shimmer) -->
+      <div id="widget-goal" class="overlay-widget">
+        <div class="goal-container">
+          <div class="goal-header">
+            <div class="goal-title-wrap">
+              <span class="goal-icon">🎯</span>
+              <span id="goal-title">Günün Hediyesi: Aslan!</span>
+            </div>
+            <span id="goal-fraction">0 / 1,000 (%0)</span>
+          </div>
+          <div class="goal-bar-bg">
+            <div id="goal-bar-fill" class="goal-bar-fill" style="width: 0%;">
+              <div class="goal-shine"></div>
+              <div class="goal-sparkle"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 6. Beğeni & Jeton Sayaçları Widget -->
+      <div id="widget-counters" class="overlay-widget">
+        <div class="counter-card like-badge">
+          <div class="counter-icon">❤️</div>
+          <div class="counter-info">
+            <div class="counter-label">TOPLAM BEĞENİ</div>
+            <div id="counter-likes" class="counter-number">0</div>
+          </div>
+        </div>
+        <div class="counter-card diamond-badge">
+          <div class="counter-icon">💎</div>
+          <div class="counter-info">
+            <div class="counter-label">TOPLAM JETON</div>
+            <div id="counter-diamonds" class="counter-number">0</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 7. Hediye Lider Tablosu (Top 5 Destekçi - LiveInteract Taç Rozetleri) -->
+      <div id="widget-leaderboard" class="overlay-widget">
+        <div class="widget-header">
+          <span>🏆 EN ÇOK DESTEKLEYENLER</span>
+        </div>
+        <div id="leaderboard-list" class="leaderboard-items">
+          <div class="empty-state">Henüz hediye gönderilmedi</div>
+        </div>
+      </div>
+
+      <!-- 8. Son Takipçi & Son Hediye Ticker Widget -->
+      <div id="widget-ticker" class="overlay-widget">
+        <div class="ticker-inner">
+          <div class="ticker-item">
+            <span class="ticker-badge">YENİ TAKİPÇİ</span>
+            <span id="ticker-follower">Henüz yok</span>
+          </div>
+          <div class="ticker-sep">•</div>
+          <div class="ticker-item">
+            <span class="ticker-badge gift-badge">SON HEDİYE</span>
+            <span id="ticker-gift">Henüz yok</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 9. Canlı İzleyici Sayacı Widget -->
+      <div id="widget-viewers" class="overlay-widget">
+        <div class="viewers-pill">
+          <span class="live-dot"></span>
+          <span class="viewer-icon">👁️</span>
+          <span id="viewer-count">0</span>
+        </div>
+      </div>
+
+      <!-- 10. Özel Metin / Logo Widget -->
+      <div id="widget-custom" class="overlay-widget">
+        <div id="custom-text-content" class="custom-badge">
+          ⚡ TikFlow LIVE
+        </div>
+      </div>
+
+      <!-- 11. TTS Seslendirme Göstergesi (LiveInteract Ses Dalgası Efekti) -->
+      <div id="widget-tts" class="overlay-widget">
+        <div id="tts-indicator" class="tts-bubble">
+          <div class="sound-wave">
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+          <span id="tts-text">...</span>
+        </div>
+      </div>
+
+      <!-- 12. Save Timer (SAVE 60s Rose Counter) -->
+      <div id="widget-save-timer" class="overlay-widget">
+        <div class="save-timer-box">
+          <div class="save-timer-header">
+            <span class="save-rose-icon">🌹</span>
+            <span class="save-title">GÜL GÖNDER SÜREYİ KURTAR!</span>
+          </div>
+          <div class="save-timer-digits">00:<span id="save-seconds">59</span></div>
+          <div class="save-timer-progress"><div id="save-progress-fill" style="width: 100%;"></div></div>
+        </div>
+      </div>
+
+      <!-- 13. Anger Meter (Rage Bar) -->
+      <div id="widget-anger-meter" class="overlay-widget">
+        <div class="anger-meter-box">
+          <div class="anger-header">
+            <span>😡 ÖFKE METRESİ</span>
+            <span id="anger-pct">%35</span>
+          </div>
+          <div class="anger-bar-bg">
+            <div id="anger-bar-fill" class="anger-bar-fill" style="width: 35%;"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 14. Win Counter & Round Timer -->
+      <div id="widget-win-counter-1" class="overlay-widget">
+        <div class="game-badge-counter">
+          <span class="game-badge-title">KAZANMA</span>
+          <span class="game-badge-val">3 / 10</span>
+        </div>
+      </div>
+
+      <div id="widget-round-timer" class="overlay-widget">
+        <div class="round-timer-box">
+          <span class="round-timer-num">10</span>
+        </div>
+      </div>
+
+      <div id="widget-team-wins" class="overlay-widget">
+        <div class="team-wins-box">
+          <div class="team-red">🔴 <span id="team-red-score">3</span></div>
+          <div class="team-vs">VS</div>
+          <div class="team-blue"><span id="team-blue-score">1</span> 🔵</div>
+        </div>
+      </div>
+
+      <!-- 18. Principal Office Game Doodle -->
+      <div id="widget-principal-office" class="overlay-widget">
+        <div class="principal-office-box">
+          <div class="principal-header">
+            <span>👨‍🏫 PRINCIPAL UNC</span>
+            <span class="office-badge">CLASSROOM</span>
+          </div>
+          <div class="principal-canvas-placeholder">
+            <span class="doodle-icon">🏫</span>
+            <span class="doodle-sub">YAYIN OYUNU AKTİF</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 19. Win Counter 2 (Holy Steps) -->
+      <div id="widget-win-counter-2" class="overlay-widget">
+        <div class="game-badge-counter holy-steps">
+          <span class="game-badge-title">HOLY STEPS</span>
+          <span class="game-badge-val">⭐ 0 / 100</span>
+        </div>
+      </div>
+
+      <!-- 15. LiveInteract Top Liker Widget -->
+      <div id="widget-topliker" class="overlay-widget">
+        <div class="topliker-card">
+          <div class="topliker-avatar-wrap">
+            <img id="topliker-avatar" class="topliker-avatar" src="" alt="Top Liker" />
+            <span class="topliker-heart-icon">❤️</span>
+          </div>
+          <div class="topliker-info">
+            <div class="topliker-tag">TOP LİKER 🔥</div>
+            <div id="topliker-name" class="topliker-name">Yayınsever</div>
+            <div class="topliker-count"><span id="topliker-likes">0</span> Beğeni</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 16. LiveInteract Mekan Sahibi (VIP Throne) Widget -->
+      <div id="widget-mekansahibi" class="overlay-widget">
+        <div class="mekansahibi-card">
+          <div class="mekan-crown">👑</div>
+          <div class="mekan-avatar-wrap">
+            <img id="mekan-avatar" class="mekan-avatar" src="" alt="Mekan Sahibi" />
+            <div class="mekan-aura"></div>
+          </div>
+          <div class="mekan-info">
+            <div class="mekan-title">👑 MEKAN SAHİBİ 👑</div>
+            <div id="mekan-name" class="mekan-name">Taht Boş</div>
+            <div class="mekan-diamonds"><span id="mekan-diamonds">0</span> 💎 JETON</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 16b. LiveInteract Kombo Mekan Sahibi (3D Combo Alert) Widget -->
+      <div id="widget-combomekansahibi" class="overlay-widget" style="display:none;">
+        <div id="combomekan-card" class="combomekan-card">
+          <div class="combomekan-sunburst"></div>
+          <div class="combomekan-crown">👑</div>
+          <div class="combomekan-avatar-wrap">
+            <img id="combomekan-avatar" class="combomekan-avatar" src="" alt="Combo Mekan Sahibi" />
+            <div class="combomekan-flame-ring"></div>
+          </div>
+          <div class="combomekan-details">
+            <div id="combomekan-badge" class="combomekan-badge">🔥 YENİ MEKAN SAHİBİ! 🔥</div>
+            <div id="combomekan-name" class="combomekan-name">Kral Destekçi</div>
+            <div class="combomekan-stats">
+              <span id="combomekan-combo" class="combomekan-combo">x10 KOMBO!</span>
+              <span id="combomekan-diamonds" class="combomekan-diamonds">💎 29.999</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 17. LiveInteract 3D Firework & Particle Canvas -->
+      <canvas id="firework-canvas" class="firework-fullscreen-canvas"></canvas>
+
+    </div>
+  </div>
+
+  <script src="/overlay/overlay.js"></script>
+</body>
+</html>

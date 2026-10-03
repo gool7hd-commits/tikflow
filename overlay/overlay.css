@@ -1,0 +1,1126 @@
+/* TikFlow Live Overlay Stylesheet (LiveInteract Enhanced) */
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800;900&family=JetBrains+Mono:wght@500;700&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: transparent !important;
+  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  color: #FFFFFF;
+  user-select: none;
+}
+
+/* LiveStudio / OBS Performance Mode (Zero GPU Overhead) */
+.li-noblur * {
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+.bx-perf * {
+  animation-duration: 0.001s !important;
+  box-shadow: none !important;
+  text-shadow: none !important;
+}
+
+#canvas-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: transparent;
+  pointer-events: none;
+}
+
+#overlay-canvas {
+  position: relative;
+  background: transparent;
+  overflow: hidden;
+  transform-origin: center center;
+}
+
+/* Vertical Mode (Default TikTok LIVE 1080x1920) */
+#overlay-canvas.layout-vertical {
+  width: 1080px;
+  height: 1920px;
+}
+
+/* Horizontal Mode (Standard 16:9 1920x1080) */
+#overlay-canvas.layout-horizontal {
+  width: 1920px;
+  height: 1080px;
+}
+
+.overlay-widget {
+  position: absolute;
+  pointer-events: auto;
+  transition: opacity 0.3s ease;
+  display: none;
+}
+
+/* 1. Video / Media Player */
+#widget-video {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+
+#media-video, #media-image {
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  display: none;
+  border-radius: 20px;
+  filter: drop-shadow(0 20px 45px rgba(0, 0, 0, 0.85));
+}
+
+/* 3. Alert Box Banner (LiveInteract 3D Neon) */
+#widget-alert {
+  display: flex;
+  justify-content: center;
+}
+
+.alert-box-inner {
+  display: none;
+  position: relative;
+  width: 100%;
+  padding: 24px 34px;
+  background: linear-gradient(135deg, rgba(16, 12, 38, 0.95), rgba(38, 12, 48, 0.95));
+  border: 2px solid rgba(168, 85, 247, 0.7);
+  border-radius: 30px;
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.85), 0 0 45px rgba(168, 85, 247, 0.45);
+  align-items: center;
+  gap: 24px;
+  backdrop-filter: blur(16px);
+}
+
+.alert-glow {
+  position: absolute;
+  inset: -2px;
+  border-radius: 32px;
+  background: linear-gradient(45deg, #a855f7, #ec4899, #06b6d4, #10b981);
+  z-index: -1;
+  opacity: 0.8;
+  filter: blur(10px);
+  animation: borderGlow 4s linear infinite;
+}
+
+@keyframes borderGlow {
+  0% { filter: blur(10px) hue-rotate(0deg); }
+  50% { filter: blur(16px) hue-rotate(180deg); }
+  100% { filter: blur(10px) hue-rotate(360deg); }
+}
+
+.alert-icon-wrap {
+  position: relative;
+  width: 104px;
+  height: 104px;
+  flex-shrink: 0;
+}
+
+.alert-avatar {
+  width: 104px;
+  height: 104px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 4px solid #a855f7;
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.6);
+}
+
+.alert-gift-icon {
+  position: absolute;
+  bottom: -6px;
+  right: -6px;
+  width: 58px;
+  height: 58px;
+  object-fit: contain;
+  filter: drop-shadow(0 6px 14px rgba(0, 0, 0, 0.8));
+  animation: giftBounce 1.2s infinite alternate ease-in-out;
+}
+
+@keyframes giftBounce {
+  0% { transform: translateY(0) scale(1); }
+  100% { transform: translateY(-10px) scale(1.18) rotate(6deg); }
+}
+
+/* LiveInteract Style Combo Multiplier Badge */
+.alert-combo-badge {
+  display: none;
+  position: absolute;
+  top: -12px;
+  right: -12px;
+  background: linear-gradient(135deg, #ff007a, #7928ca);
+  color: #FFFFFF;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 16px;
+  font-weight: 900;
+  padding: 4px 12px;
+  border-radius: 999px;
+  border: 2px solid #ffffff;
+  box-shadow: 0 4px 15px rgba(255, 0, 122, 0.8);
+  animation: comboPulse 0.4s infinite alternate ease-in-out;
+  z-index: 10;
+}
+
+@keyframes comboPulse {
+  0% { transform: scale(1); }
+  100% { transform: scale(1.15) rotate(4deg); }
+}
+
+.alert-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.alert-title {
+  font-size: 32px;
+  font-weight: 900;
+  background: linear-gradient(90deg, #FFFFFF, #f472b6, #c084fc);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+  letter-spacing: -0.5px;
+}
+
+.alert-subtitle {
+  font-size: 22px;
+  font-weight: 700;
+  color: #38bdf8;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
+}
+
+/* Animations (Tikfinity & LiveInteract Enhanced) */
+.anim-fade { animation: animFadeIn 0.4s ease forwards; }
+@keyframes animFadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+.anim-zoom { animation: animZoomIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; }
+@keyframes animZoomIn { from { opacity: 0; transform: scale(0.4); } to { opacity: 1; transform: scale(1); } }
+
+.anim-slide { animation: animSlideIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+@keyframes animSlideIn { from { opacity: 0; transform: translateY(-60px); } to { opacity: 1; transform: translateY(0); } }
+
+.anim-bounce { animation: animBounceIn 0.7s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards; }
+@keyframes animBounceIn {
+  0% { opacity: 0; transform: translateY(-100px) scale(0.6); }
+  60% { opacity: 1; transform: translateY(15px) scale(1.05); }
+  80% { transform: translateY(-8px) scale(0.98); }
+  100% { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.anim-shake { animation: animShake 0.6s ease forwards; }
+@keyframes animShake {
+  0% { transform: scale(0.8) rotate(0deg); opacity: 0; }
+  20% { transform: scale(1.05) rotate(-6deg); opacity: 1; }
+  40% { transform: scale(1.05) rotate(6deg); }
+  60% { transform: scale(1) rotate(-3deg); }
+  80% { transform: scale(1) rotate(3deg); }
+  100% { transform: scale(1) rotate(0deg); opacity: 1; }
+}
+
+/* 1. Neon Pulse / Glow */
+.anim-neon, .anim-neon-pulse { animation: animNeonPulse 0.8s cubic-bezier(0.25, 1, 0.5, 1) forwards, neonAura 2s infinite alternate; }
+@keyframes animNeonPulse {
+  0% { opacity: 0; transform: scale(0.5); filter: brightness(2) drop-shadow(0 0 40px #22d3ee); }
+  50% { transform: scale(1.08); filter: brightness(1.5) drop-shadow(0 0 60px #ec4899); }
+  100% { opacity: 1; transform: scale(1); filter: brightness(1) drop-shadow(0 0 25px rgba(34, 211, 238, 0.6)); }
+}
+@keyframes neonAura {
+  0% { box-shadow: 0 0 25px rgba(34, 211, 238, 0.6), inset 0 0 15px rgba(34, 211, 238, 0.3); border-color: #22d3ee; }
+  100% { box-shadow: 0 0 45px rgba(236, 72, 153, 0.8), inset 0 0 25px rgba(236, 72, 153, 0.4); border-color: #ec4899; }
+}
+
+/* 2. 3D Card Flip */
+.anim-flip, .anim-flip-3d { animation: animFlip3D 0.7s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; backface-visibility: visible; }
+@keyframes animFlip3D {
+  0% { opacity: 0; transform: perspective(900px) rotateY(-90deg) scale(0.6); }
+  60% { opacity: 1; transform: perspective(900px) rotateY(15deg) scale(1.04); }
+  80% { transform: perspective(900px) rotateY(-7deg) scale(0.98); }
+  100% { opacity: 1; transform: perspective(900px) rotateY(0deg) scale(1); }
+}
+
+/* 3. Elastic Pop */
+.anim-elastic { animation: animElastic 0.85s cubic-bezier(0.68, -0.6, 0.32, 1.6) forwards; }
+@keyframes animElastic {
+  0% { opacity: 0; transform: scale3d(0.2, 0.2, 0.2); }
+  45% { opacity: 1; transform: scale3d(1.15, 0.85, 1); }
+  60% { transform: scale3d(0.9, 1.1, 1); }
+  75% { transform: scale3d(1.05, 0.95, 1); }
+  90% { transform: scale3d(0.98, 1.02, 1); }
+  100% { opacity: 1; transform: scale3d(1, 1, 1); }
+}
+
+/* 4. Slide In from Left */
+.anim-slide-left { animation: animSlideLeft 0.55s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+@keyframes animSlideLeft {
+  0% { opacity: 0; transform: translateX(-150px) skewX(-8deg); }
+  70% { transform: translateX(10px) skewX(2deg); opacity: 1; }
+  100% { opacity: 1; transform: translateX(0) skewX(0deg); }
+}
+
+/* 5. Slide In from Right */
+.anim-slide-right { animation: animSlideRight 0.55s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+@keyframes animSlideRight {
+  0% { opacity: 0; transform: translateX(150px) skewX(8deg); }
+  70% { transform: translateX(-10px) skewX(-2deg); opacity: 1; }
+  100% { opacity: 1; transform: translateX(0) skewX(0deg); }
+}
+
+/* 6. Slide Up from Bottom */
+.anim-slide-up { animation: animSlideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+@keyframes animSlideUp {
+  0% { opacity: 0; transform: translateY(120px) scale(0.85); }
+  70% { transform: translateY(-12px) scale(1.03); opacity: 1; }
+  100% { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* 7. Fire Burst / Inferno */
+.anim-fire, .anim-fire-burst { animation: animFireBurst 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards, flameFlicker 1.5s infinite alternate ease-in-out; }
+@keyframes animFireBurst {
+  0% { opacity: 0; transform: scale(0.3) translateY(50px); filter: drop-shadow(0 0 50px #f97316); }
+  50% { transform: scale(1.12) translateY(-8px); filter: drop-shadow(0 0 70px #ef4444); }
+  100% { opacity: 1; transform: scale(1) translateY(0); filter: drop-shadow(0 0 30px #f59e0b); }
+}
+@keyframes flameFlicker {
+  0% { box-shadow: 0 10px 40px rgba(249, 115, 22, 0.6), inset 0 0 20px rgba(239, 68, 68, 0.3); border-color: #f97316; }
+  50% { box-shadow: 0 15px 60px rgba(239, 68, 68, 0.8), inset 0 0 30px rgba(245, 158, 11, 0.5); border-color: #ef4444; }
+  100% { box-shadow: 0 10px 45px rgba(245, 158, 11, 0.7), inset 0 0 25px rgba(249, 115, 22, 0.4); border-color: #f59e0b; }
+}
+
+/* 8. Rainbow / Holographic Shimmer */
+.anim-rainbow { animation: animZoomIn 0.5s ease forwards, rainbowFlow 3s linear infinite; }
+@keyframes rainbowFlow {
+  0% { filter: hue-rotate(0deg) drop-shadow(0 0 20px #8b5cf6); border-color: #8b5cf6; }
+  50% { filter: hue-rotate(180deg) drop-shadow(0 0 35px #06b6d4); border-color: #06b6d4; }
+  100% { filter: hue-rotate(360deg) drop-shadow(0 0 20px #8b5cf6); border-color: #8b5cf6; }
+}
+
+/* 9. Heartbeat Rhythm */
+.anim-heartbeat { animation: animHeartbeat 1.1s ease-in-out forwards; }
+@keyframes animHeartbeat {
+  0% { opacity: 0; transform: scale(0.6); }
+  25% { opacity: 1; transform: scale(1.12); }
+  35% { transform: scale(0.96); }
+  50% { transform: scale(1.18); filter: drop-shadow(0 0 35px #f43f5e); }
+  65% { transform: scale(0.98); }
+  80% { transform: scale(1.05); }
+  100% { opacity: 1; transform: scale(1); filter: drop-shadow(0 0 15px rgba(244, 63, 94, 0.4)); }
+}
+
+/* 10. Cyberpunk Glitch */
+.anim-glitch { animation: animGlitch 0.65s steps(2, start) forwards; }
+@keyframes animGlitch {
+  0% { opacity: 0; transform: scale(0.8) translate(0); clip-path: inset(0 0 0 0); }
+  15% { opacity: 1; transform: translate(-10px, 3px) skewX(5deg); clip-path: inset(20% 0 30% 0); text-shadow: 2px 0 red, -2px 0 cyan; }
+  30% { transform: translate(10px, -3px) skewX(-5deg); clip-path: inset(10% 0 50% 0); }
+  50% { transform: translate(-5px, 2px); clip-path: inset(40% 0 10% 0); text-shadow: -2px 0 red, 2px 0 cyan; }
+  75% { transform: translate(4px, -1px); clip-path: inset(5% 0 70% 0); }
+  100% { opacity: 1; transform: translate(0) skewX(0); clip-path: inset(0 0 0 0); text-shadow: none; }
+}
+
+/* 11. Swirl / Vortex */
+.anim-swirl { animation: animSwirl 0.75s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; }
+@keyframes animSwirl {
+  0% { opacity: 0; transform: scale(0.1) rotate(-360deg); filter: blur(8px); }
+  70% { opacity: 1; transform: scale(1.06) rotate(15deg); filter: blur(0); }
+  100% { opacity: 1; transform: scale(1) rotate(0deg); }
+}
+
+/* 12. Rubberband */
+.anim-rubberband { animation: animRubberband 0.8s ease forwards; }
+@keyframes animRubberband {
+  0% { opacity: 0; transform: scale3d(0.3, 0.3, 0.3); }
+  30% { opacity: 1; transform: scale3d(1.25, 0.75, 1); }
+  40% { transform: scale3d(0.75, 1.25, 1); }
+  50% { transform: scale3d(1.15, 0.85, 1); }
+  65% { transform: scale3d(0.95, 1.05, 1); }
+  75% { transform: scale3d(1.05, 0.95, 1); }
+  100% { opacity: 1; transform: scale3d(1, 1, 1); }
+}
+
+/* 13. Tada / Fanfare */
+.anim-tada { animation: animTada 0.8s ease forwards; }
+@keyframes animTada {
+  0% { opacity: 0; transform: scale3d(0.4, 0.4, 0.4); }
+  10%, 20% { opacity: 1; transform: scale3d(0.9, 0.9, 0.9) rotate3d(0, 0, 1, -5deg); }
+  30%, 50%, 70%, 90% { transform: scale3d(1.12, 1.12, 1.12) rotate3d(0, 0, 1, 5deg); }
+  40%, 60%, 80% { transform: scale3d(1.12, 1.12, 1.12) rotate3d(0, 0, 1, -5deg); }
+  100% { opacity: 1; transform: scale3d(1, 1, 1) rotate3d(0, 0, 1, 0deg); }
+}
+
+/* 4. Chat Stream */
+.widget-header {
+  font-size: 14px;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  color: #94a3b8;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.pulse-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #10b981;
+  box-shadow: 0 0 10px #10b981;
+  animation: pulseDot 1.5s infinite;
+}
+
+@keyframes pulseDot {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.5); opacity: 0.6; }
+}
+
+.chat-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-height: calc(100% - 30px);
+  overflow: hidden;
+}
+
+.chat-bubble {
+  background: rgba(15, 23, 42, 0.88);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-left: 4px solid #a855f7;
+  padding: 12px 16px;
+  border-radius: 14px;
+  backdrop-filter: blur(10px);
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  animation: chatPop 0.3s ease-out;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.45);
+}
+
+@keyframes chatPop {
+  from { opacity: 0; transform: translateY(15px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.chat-bubble-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.chat-bubble-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.chat-user {
+  font-size: 13px;
+  font-weight: 800;
+  color: #c084fc;
+}
+
+.chat-text {
+  font-size: 15px;
+  font-weight: 600;
+  color: #f8fafc;
+  word-break: break-word;
+}
+
+/* 5. Dinamik Bağış Hedef Çubuğu (LiveInteract Style Shimmer) */
+.goal-container {
+  width: 100%;
+  background: rgba(14, 18, 38, 0.92);
+  border: 1px solid rgba(168, 85, 247, 0.5);
+  border-radius: 20px;
+  padding: 16px 22px;
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.6), 0 0 25px rgba(168, 85, 247, 0.2);
+  backdrop-filter: blur(14px);
+}
+
+.goal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 16px;
+  font-weight: 800;
+  margin-bottom: 10px;
+}
+
+.goal-title-wrap {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.goal-icon {
+  font-size: 18px;
+}
+
+#goal-title {
+  color: #f8fafc;
+  letter-spacing: -0.2px;
+}
+
+#goal-fraction {
+  color: #a855f7;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 15px;
+  font-weight: 900;
+}
+
+.goal-bar-bg {
+  width: 100%;
+  height: 22px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 999px;
+  overflow: hidden;
+  position: relative;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.goal-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #ec4899, #a855f7, #06b6d4, #10b981);
+  background-size: 200% 100%;
+  border-radius: 999px;
+  position: relative;
+  transition: width 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 0 20px rgba(168, 85, 247, 0.9);
+  animation: gradientFlow 3s ease infinite;
+}
+
+@keyframes gradientFlow {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.goal-shine {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.5), transparent);
+  animation: shine 1.8s infinite;
+}
+
+@keyframes shine {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+/* 6. Counters Widget */
+#widget-counters {
+  display: flex;
+  gap: 16px;
+}
+
+.counter-card {
+  flex: 1;
+  background: rgba(15, 23, 42, 0.9);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 18px;
+  padding: 14px 20px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(12px);
+}
+
+.like-badge { border-left: 4px solid #ef4444; }
+.diamond-badge { border-left: 4px solid #3b82f6; }
+
+.counter-icon { font-size: 30px; }
+
+.counter-label {
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 1.2px;
+  color: #94a3b8;
+}
+
+.counter-number {
+  font-size: 26px;
+  font-weight: 900;
+  font-family: 'JetBrains Mono', monospace;
+  color: #ffffff;
+}
+
+/* 7. Leaderboard Widget (LiveInteract Style Crown Badges) */
+#widget-leaderboard {
+  background: rgba(15, 23, 42, 0.92);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 22px;
+  padding: 18px 22px;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(14px);
+}
+
+.leaderboard-items {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.leaderboard-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 12px;
+  background: rgba(255, 255, 255, 0.04);
+  border-radius: 12px;
+  transition: transform 0.2s ease;
+}
+
+.leaderboard-row:hover {
+  transform: translateX(4px);
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.leaderboard-rank {
+  font-size: 16px;
+  font-weight: 900;
+  width: 26px;
+  text-align: center;
+}
+
+.rank-1 { color: #ffd700; text-shadow: 0 0 10px rgba(255, 215, 0, 0.8); }
+.rank-2 { color: #c0c0c0; text-shadow: 0 0 8px rgba(192, 192, 192, 0.8); }
+.rank-3 { color: #cd7f32; text-shadow: 0 0 8px rgba(205, 127, 50, 0.8); }
+
+.leaderboard-avatar {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid rgba(255, 255, 255, 0.25);
+}
+
+.leaderboard-name {
+  flex: 1;
+  font-size: 14px;
+  font-weight: 700;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.leaderboard-diamonds {
+  font-size: 14px;
+  font-weight: 800;
+  font-family: 'JetBrains Mono', monospace;
+  color: #38bdf8;
+}
+
+.empty-state {
+  font-size: 13px;
+  color: #64748b;
+  text-align: center;
+  padding: 16px;
+}
+
+/* 8. Ticker Widget */
+.ticker-inner {
+  width: 100%;
+  background: rgba(15, 23, 42, 0.88);
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  padding: 8px 22px;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  font-size: 13px;
+  font-weight: 600;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.45);
+}
+
+.ticker-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.ticker-badge {
+  background: #a855f7;
+  color: white;
+  font-size: 10px;
+  font-weight: 800;
+  padding: 2px 10px;
+  border-radius: 999px;
+}
+
+.gift-badge { background: #ec4899; }
+.ticker-sep { color: #475569; }
+
+/* 9. Viewer Count Widget */
+.viewers-pill {
+  background: rgba(15, 23, 42, 0.88);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 999px;
+  padding: 8px 18px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 15px;
+  font-weight: 800;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5);
+}
+
+.live-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #ef4444;
+  animation: pulseDot 1s infinite;
+}
+
+/* 10. Custom Widget */
+.custom-badge {
+  background: linear-gradient(135deg, rgba(168, 85, 247, 0.25), rgba(236, 72, 153, 0.25));
+  border: 1px solid rgba(168, 85, 247, 0.6);
+  padding: 12px 20px;
+  border-radius: 16px;
+  font-size: 16px;
+  font-weight: 800;
+  color: #ffffff;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.45);
+  backdrop-filter: blur(10px);
+}
+
+/* 11. TTS Bubble with Sound Wave Animation */
+.tts-bubble {
+  display: none;
+  background: rgba(15, 23, 42, 0.96);
+  border: 2px solid #06b6d4;
+  border-radius: 18px;
+  padding: 12px 18px;
+  font-size: 14px;
+  font-weight: 700;
+  color: #38bdf8;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.7);
+  align-items: center;
+  gap: 12px;
+  animation: animZoomIn 0.3s ease;
+}
+
+.sound-wave {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  height: 16px;
+}
+
+.sound-wave span {
+  display: block;
+  width: 3px;
+  height: 100%;
+  background: #06b6d4;
+  border-radius: 2px;
+  animation: soundWave 0.8s ease-in-out infinite alternate;
+}
+
+.sound-wave span:nth-child(1) { animation-delay: 0.1s; height: 40%; }
+.sound-wave span:nth-child(2) { animation-delay: 0.3s; height: 100%; }
+.sound-wave span:nth-child(3) { animation-delay: 0.2s; height: 70%; }
+.sound-wave span:nth-child(4) { animation-delay: 0.4s; height: 50%; }
+
+@keyframes soundWave {
+  0% { transform: scaleY(0.3); }
+  100% { transform: scaleY(1); }
+}
+
+/* 12. Save Timer (Rose Counter) */
+.save-timer-box {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, rgba(35, 10, 25, 0.95), rgba(15, 5, 15, 0.95));
+  border: 2px solid #f43f5e;
+  border-radius: 24px;
+  padding: 16px 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-shadow: 0 15px 40px rgba(244, 63, 94, 0.3), inset 0 0 20px rgba(244, 63, 94, 0.15);
+}
+.save-timer-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.save-rose-icon { font-size: 28px; animation: giftBounce 1s infinite alternate; }
+.save-title { font-size: 16px; font-weight: 900; color: #fda4af; letter-spacing: 0.5px; }
+.save-timer-digits { font-size: 54px; font-weight: 900; color: #fff; font-family: monospace; text-align: center; text-shadow: 0 0 25px rgba(244, 63, 94, 0.7); }
+.save-timer-progress { width: 100%; height: 10px; background: rgba(255,255,255,0.1); border-radius: 5px; overflow: hidden; }
+#save-progress-fill { height: 100%; background: linear-gradient(90deg, #f43f5e, #ec4899); border-radius: 5px; transition: width 0.3s; }
+
+/* 13. Anger Meter */
+.anger-meter-box {
+  width: 100%;
+  height: 100%;
+  background: rgba(18, 10, 10, 0.95);
+  border: 2px solid #ef4444;
+  border-radius: 20px;
+  padding: 14px 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-shadow: 0 10px 30px rgba(239, 68, 68, 0.3);
+}
+.anger-header { display: flex; justify-content: space-between; font-weight: 900; font-size: 15px; color: #fca5a5; }
+.anger-bar-bg { width: 100%; height: 16px; background: rgba(255,255,255,0.1); border-radius: 8px; overflow: hidden; }
+.anger-bar-fill { height: 100%; background: linear-gradient(90deg, #f97316, #ef4444, #b91c1c); transition: width 0.3s; }
+
+/* 14. Game Badges */
+.game-badge-counter {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, rgba(8, 51, 68, 0.95), rgba(6, 182, 212, 0.4));
+  border: 2px solid #06b6d4;
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 10px 25px rgba(6, 182, 212, 0.3);
+}
+.game-badge-title { font-size: 11px; font-weight: 900; color: #67e8f9; letter-spacing: 1px; }
+.game-badge-val { font-size: 28px; font-weight: 900; color: #fff; font-family: monospace; }
+
+.game-badge-counter.holy-steps {
+  background: linear-gradient(135deg, rgba(69, 43, 8, 0.95), rgba(245, 158, 11, 0.4));
+  border-color: #f59e0b;
+  box-shadow: 0 10px 25px rgba(245, 158, 11, 0.3);
+}
+.game-badge-counter.holy-steps .game-badge-title { color: #fde68a; }
+
+.principal-office-box {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, rgba(30, 20, 10, 0.95), rgba(40, 25, 15, 0.95));
+  border: 2px solid #f59e0b;
+  border-radius: 24px;
+  padding: 16px 20px;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6);
+}
+.principal-header { display: flex; justify-content: space-between; align-items: center; font-weight: 900; font-size: 14px; color: #fef3c7; }
+.office-badge { font-size: 10px; background: rgba(245, 158, 11, 0.2); color: #fbbf24; padding: 2px 8px; border-radius: 8px; border: 1px solid rgba(245, 158, 11, 0.3); }
+.principal-canvas-placeholder { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; }
+.doodle-icon { font-size: 40px; }
+.doodle-sub { font-size: 11px; font-weight: 900; letter-spacing: 1px; color: #d97706; }
+
+.round-timer-box {
+  width: 100%;
+  height: 100%;
+  background: #0f1426;
+  border: 4px solid #a855f7;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 10px 30px rgba(168, 85, 247, 0.4);
+}
+.round-timer-num { font-size: 64px; font-weight: 900; color: #fff; font-family: monospace; }
+
+.team-wins-box {
+  width: 100%;
+  height: 100%;
+  background: rgba(15, 23, 42, 0.95);
+  border: 2px solid rgba(255,255,255,0.15);
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  font-weight: 900;
+  font-size: 20px;
+  color: #fff;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+}
+.team-red { color: #f87171; font-size: 24px; }
+.team-vs { font-size: 13px; color: #94a3b8; letter-spacing: 2px; }
+.team-blue { color: #60a5fa; font-size: 24px; }
+
+/* 15. LiveInteract Top Liker Widget */
+#widget-topliker {
+  display: flex;
+  align-items: center;
+}
+.topliker-card {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background: linear-gradient(135deg, rgba(20, 10, 25, 0.95), rgba(40, 10, 30, 0.95));
+  border: 2px solid #ec4899;
+  border-radius: 26px;
+  padding: 12px 20px;
+  box-shadow: 0 15px 35px rgba(236, 72, 153, 0.35), 0 0 25px rgba(236, 72, 153, 0.2);
+  backdrop-filter: blur(12px);
+  animation: animZoomIn 0.4s ease;
+}
+.topliker-avatar-wrap {
+  position: relative;
+  width: 58px;
+  height: 58px;
+  flex-shrink: 0;
+}
+.topliker-avatar {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid #ec4899;
+  box-shadow: 0 0 15px rgba(236, 72, 153, 0.6);
+}
+.topliker-heart-icon {
+  position: absolute;
+  bottom: -4px;
+  right: -4px;
+  font-size: 20px;
+  animation: giftBounce 0.8s infinite alternate;
+}
+.topliker-tag {
+  font-size: 10px;
+  font-weight: 900;
+  color: #f472b6;
+  letter-spacing: 1px;
+}
+.topliker-name {
+  font-size: 16px;
+  font-weight: 900;
+  color: #fff;
+  white-space: nowrap;
+  max-width: 180px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.topliker-count {
+  font-size: 13px;
+  font-weight: 800;
+  color: #fda4af;
+  font-family: monospace;
+}
+
+/* 16. LiveInteract Mekan Sahibi (VIP Throne) Widget */
+#widget-mekansahibi {
+  display: flex;
+  align-items: center;
+}
+.mekansahibi-card {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  background: linear-gradient(135deg, rgba(30, 20, 5, 0.95), rgba(45, 30, 10, 0.95));
+  border: 2px solid #eab308;
+  border-radius: 28px;
+  padding: 14px 24px;
+  box-shadow: 0 20px 45px rgba(234, 179, 8, 0.4), 0 0 35px rgba(234, 179, 8, 0.25);
+  backdrop-filter: blur(14px);
+  animation: animZoomIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+.mekan-crown {
+  position: absolute;
+  top: -24px;
+  left: 28px;
+  font-size: 32px;
+  filter: drop-shadow(0 4px 10px rgba(234, 179, 8, 0.8));
+  animation: giftBounce 1.2s infinite alternate ease-in-out;
+}
+.mekan-avatar-wrap {
+  position: relative;
+  width: 64px;
+  height: 64px;
+  flex-shrink: 0;
+}
+.mekan-avatar {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid #eab308;
+  box-shadow: 0 0 20px rgba(234, 179, 8, 0.7);
+}
+.mekan-title {
+  font-size: 11px;
+  font-weight: 900;
+  color: #facc15;
+  letter-spacing: 1.5px;
+  text-shadow: 0 0 10px rgba(234, 179, 8, 0.5);
+}
+.mekan-name {
+  font-size: 18px;
+  font-weight: 900;
+  color: #fff;
+  white-space: nowrap;
+  max-width: 200px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.mekan-diamonds {
+  font-size: 14px;
+  font-weight: 800;
+  color: #fef08a;
+  font-family: monospace;
+}
+
+/* 16b. LiveInteract Kombo Mekan Sahibi 3D Alert Card */
+#widget-combomekansahibi {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.combomekan-card {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  background: radial-gradient(circle at 50% 50%, rgba(45, 25, 5, 0.96), rgba(20, 10, 2, 0.98));
+  border: 3px solid #facc15;
+  border-radius: 36px;
+  padding: 18px 32px;
+  box-shadow: 0 25px 60px rgba(234, 179, 8, 0.6), 0 0 50px rgba(245, 158, 11, 0.4), inset 0 0 30px rgba(234, 179, 8, 0.3);
+  backdrop-filter: blur(16px);
+  overflow: hidden;
+  animation: comboMekanEnter 0.75s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards, comboMekanGlow 2s infinite alternate ease-in-out;
+}
+
+@keyframes comboMekanEnter {
+  0% { opacity: 0; transform: perspective(1000px) rotateX(60deg) scale(0.4) translateY(-100px); }
+  60% { opacity: 1; transform: perspective(1000px) rotateX(-10deg) scale(1.06) translateY(10px); }
+  100% { opacity: 1; transform: perspective(1000px) rotateX(0deg) scale(1) translateY(0); }
+}
+
+@keyframes comboMekanGlow {
+  0% { border-color: #eab308; box-shadow: 0 20px 50px rgba(234, 179, 8, 0.5), 0 0 40px rgba(234, 179, 8, 0.3); }
+  100% { border-color: #f59e0b; box-shadow: 0 25px 70px rgba(245, 158, 11, 0.8), 0 0 60px rgba(239, 68, 68, 0.5); }
+}
+
+.combomekan-sunburst {
+  position: absolute;
+  inset: -100px;
+  background: conic-gradient(from 0deg, transparent 0deg 20deg, rgba(234, 179, 8, 0.15) 20deg 40deg, transparent 40deg 60deg, rgba(234, 179, 8, 0.15) 60deg 80deg, transparent 80deg 100deg, rgba(234, 179, 8, 0.15) 100deg 120deg, transparent 120deg 140deg, rgba(234, 179, 8, 0.15) 140deg 160deg, transparent 160deg 180deg, rgba(234, 179, 8, 0.15) 180deg 200deg, transparent 200deg 220deg, rgba(234, 179, 8, 0.15) 220deg 240deg, transparent 240deg 260deg, rgba(234, 179, 8, 0.15) 260deg 280deg, transparent 280deg 300deg, rgba(234, 179, 8, 0.15) 300deg 320deg, transparent 320deg 340deg, rgba(234, 179, 8, 0.15) 340deg 360deg);
+  border-radius: 50%;
+  animation: sunburstRotate 15s linear infinite;
+  pointer-events: none;
+  z-index: 0;
+}
+
+@keyframes sunburstRotate {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.combomekan-crown {
+  position: absolute;
+  top: -30px;
+  left: 36px;
+  font-size: 40px;
+  filter: drop-shadow(0 6px 14px rgba(234, 179, 8, 0.9));
+  animation: giftBounce 1.2s infinite alternate ease-in-out;
+  z-index: 10;
+}
+
+.combomekan-avatar-wrap {
+  position: relative;
+  width: 80px;
+  height: 80px;
+  flex-shrink: 0;
+  z-index: 2;
+}
+
+.combomekan-avatar {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 4px solid #facc15;
+  box-shadow: 0 0 25px rgba(250, 204, 21, 0.8);
+}
+
+.combomekan-flame-ring {
+  position: absolute;
+  inset: -6px;
+  border-radius: 50%;
+  border: 2px dashed #f59e0b;
+  animation: sunburstRotate 4s linear infinite;
+}
+
+.combomekan-details {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  z-index: 2;
+}
+
+.combomekan-badge {
+  font-size: 13px;
+  font-weight: 900;
+  letter-spacing: 2px;
+  color: #fef08a;
+  text-shadow: 0 0 12px rgba(234, 179, 8, 0.8), 0 2px 4px rgba(0,0,0,0.8);
+  text-transform: uppercase;
+}
+
+.combomekan-name {
+  font-size: 24px;
+  font-weight: 900;
+  color: #ffffff;
+  letter-spacing: -0.5px;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.8);
+}
+
+.combomekan-stats {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.combomekan-combo {
+  font-size: 15px;
+  font-weight: 900;
+  color: #f97316;
+  background: rgba(249, 115, 22, 0.2);
+  border: 1px solid rgba(249, 115, 22, 0.5);
+  padding: 2px 10px;
+  border-radius: 12px;
+  letter-spacing: 1px;
+}
+
+.combomekan-diamonds {
+  font-size: 16px;
+  font-weight: 900;
+  color: #38bdf8;
+  font-family: monospace;
+}
+
+/* 17. LiveInteract 3D Firework Canvas */
+.firework-fullscreen-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 99998;
+}
